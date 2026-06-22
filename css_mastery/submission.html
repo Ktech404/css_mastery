@@ -1,0 +1,635 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Animation & Z-Index Challenges 🎨</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            color: white;
+            padding: 40px 20px;
+            animation: fadeInDown 1s ease-out;
+        }
+
+        header h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .assignments-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .assignment-card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .assignment-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 50px rgba(0,0,0,0.3);
+        }
+
+        .assignment-card h2 {
+            color: #667eea;
+            font-size: 2em;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .badge {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.5em;
+            font-weight: normal;
+        }
+
+        .due-date {
+            background: #ff6b6b;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 10px;
+            display: inline-block;
+            margin: 15px 0;
+            font-weight: bold;
+            animation: pulse 2s infinite;
+        }
+
+        .section {
+            margin: 20px 0;
+        }
+
+        .section h3 {
+            color: #764ba2;
+            margin-bottom: 10px;
+            font-size: 1.3em;
+        }
+
+        .requirements {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+        }
+
+        .requirements ul {
+            margin-left: 20px;
+        }
+
+        .requirements li {
+            margin: 10px 0;
+            line-height: 1.6;
+        }
+
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            position: relative;
+        }
+
+        .code-block::before {
+            content: "HTML";
+            position: absolute;
+            top: 5px;
+            right: 10px;
+            background: #667eea;
+            color: white;
+            padding: 2px 10px;
+            border-radius: 5px;
+            font-size: 0.8em;
+        }
+
+        .demo-section {
+            background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%);
+            padding: 30px;
+            border-radius: 15px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .demo-section h3 {
+            color: #2d3436;
+            margin-bottom: 20px;
+        }
+
+        /* Animation Demo */
+        #fraction-demo {
+            position: relative;
+            height: 150px;
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+
+        .question {
+            font-size: 2em;
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .equals {
+            font-size: 2em;
+            position: absolute;
+            right: 100px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        #answer {
+            font-size: 2em;
+            position: absolute;
+            animation: moveFraction 3s ease-in-out 1s forwards;
+        }
+
+        @keyframes moveFraction {
+            0% {
+                color: yellow;
+                transform: translate(-355px, 60px);
+            }
+            50% {
+                transform: translate(0px, 60px);
+            }
+            100% {
+                color: red;
+                transform: translate(0px, 0px);
+            }
+        }
+
+        /* T-Shirt Demo */
+        #tshirt-demo {
+            position: relative;
+            height: 400px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .tshirt-container {
+            position: relative;
+            display: inline-block;
+            padding: 22px;
+            border-radius: 24px;
+        }
+
+        .tshirt-container::before {
+            content: "";
+            position: absolute;
+            inset: -6px;
+            border-radius: 28px;
+            background: conic-gradient(
+                from 120deg,
+                #ff6b6b,
+                #feca57,
+                #48dbfb,
+                #5f27cd,
+                #ff6b6b
+            );
+            z-index: 0;
+        }
+
+        .tshirt-container::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: 24px;
+            background: white;
+            z-index: 0;
+        }
+
+        .tshirt-container > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        .tshirt-img {
+            position: relative;
+            left: 10px;
+            width: 300px;
+            height: auto;
+            z-index: 1;
+            border-radius: 12px;
+        }
+
+        .overlay-text {
+            position: absolute;
+            font-size: 3em;
+            font-weight: bold;
+            font-family: Arial, sans-serif;
+        }
+
+        .first {
+            top: 100px;
+            left: 80px;
+            color: white;
+            z-index: 10;
+        }
+
+        .heart {
+            top: 140px;
+            left: 110px;
+            color: red;
+            font-size: 4em;
+            z-index: 10;
+        }
+
+        .last {
+            top: 190px;
+            left: 75px;
+            color: white;
+            z-index: 10;
+        }
+
+        .download-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 30px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            margin: 10px 0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .download-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+
+        .interactive-hint {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+
+        .interactive-hint::before {
+            content: "💡 ";
+            font-size: 1.2em;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        .restart-btn {
+            background: #00b894;
+            color: white;
+            padding: 10px 25px;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 1em;
+            margin-top: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .restart-btn:hover {
+            background: #00a383;
+            transform: scale(1.05);
+        }
+
+        .team-alert {
+            background: rgba(255,255,255,0.15);
+            border: 2px solid rgba(255,255,255,0.6);
+            border-radius: 16px;
+            padding: 18px 25px;
+            margin: 20px auto 0;
+            max-width: 700px;
+            color: white;
+            font-size: 1em;
+            line-height: 1.7;
+        }
+
+        .team-alert strong {
+            font-size: 1.1em;
+            display: block;
+            margin-bottom: 6px;
+            letter-spacing: 0.3px;
+        }
+
+        .submit-banner {
+            display: inline-block;
+            margin-top: 25px;
+            background: #ff6b6b;
+            color: white;
+            padding: 14px 35px;
+            border-radius: 30px;
+            font-size: 1.15em;
+            font-weight: bold;
+            text-decoration: none;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            animation: pulse 2s infinite;
+            letter-spacing: 0.5px;
+        }
+
+        .submit-banner:hover {
+            background: #e55a5a;
+            transform: scale(1.05);
+        }
+
+        footer {
+            text-align: center;
+            color: white;
+            padding: 40px 20px;
+            margin-top: 50px;
+        }
+
+        .tips-section {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            margin-top: 40px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+
+        .tips-section h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+        }
+
+        .tip-card {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            border-left: 4px solid #764ba2;
+        }
+
+        @media (max-width: 768px) {
+            .assignments-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            header h1 {
+                font-size: 2em;
+            }
+            
+            .tshirt-img {
+                width: 200px;
+            }
+            
+            .overlay-text {
+                font-size: 2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎨 CSS Mastery Challenges 🚀</h1>
+            <p>Master CSS Animations & Z-Index with Interactive Examples</p>
+
+            <div class="team-alert">
+                👥 <strong>Team Formation &amp; Submission Notice</strong>
+                This is a <strong>group activity</strong>. You are required to select your own partner.
+                Teams are strictly limited to <strong>two members</strong>.
+                Both partners must submit individually to their i-College dropbox.
+            </div>
+
+            <a href="submission_Template.html" class="submit-banner">📝 Go to Submission Form</a>
+        </header>
+
+        <div class="assignments-grid">
+            <!-- Assignment 1: Animation -->
+            <div class="assignment-card">
+                <h2>
+                    Challenge 1: Animating the Ansah
+                    <span class="badge">Animation</span>
+                </h2>
+                
+                <div class="due-date">⏰ Due: 5:30 PM (End of Class today)</div>
+
+                <div class="section">
+                    <h3>📋 Mission</h3>
+                    <p>Modify an HTML file's embedded stylesheet to create a smooth fraction animation that moves across the screen with color transitions!</p>
+                </div>
+
+                <div class="section">
+                    <h3>🎯 Requirements</h3>
+                    <div class="requirements">
+                        <ul>
+                            <li><strong>Create a keyframe called "moveFraction"</strong> that animates the fraction through three stages:</li>
+                            <li><strong>At 0%:</strong> Set font color to <span style="color: yellow; background: black; padding: 2px 5px;">yellow</span> and translate to position <code>(-355px, 60px)</code> - fraction starts off the left side of screen</li>
+                            <li><strong>At 50%:</strong> Translate to <code>(0px, 60px)</code> - fraction appears just below and right of the question</li>
+                            <li><strong>At 100%:</strong> Set font color to <span style="color: red; font-weight: bold;">red</span> and translate to <code>(0px, 0px)</code> - fraction aligns next to the = sign</li>
+                            <li><strong>Animation Timing:</strong> Start the moveFraction animation 1 second after CSS loads in the #answer rule</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="demo-section">
+                    <h3>🎬 Live Animation Demo</h3>
+                    <div id="fraction-demo">
+                        <span class="question">What is 1/2 + 1/4?</span>
+                        <span class="equals">=</span>
+                        <span id="answer" style="right: 20px; top: 50%; transform: translateY(-50%);">3/4</span>
+                    </div>
+                    <button class="restart-btn" onclick="restartAnimation()">↻ Restart Animation</button>
+                </div>
+
+                <div class="interactive-hint">
+                    <strong>Pro Tip:</strong> Use the <code>transform: translate()</code> property for smooth animations and the <code>animation-delay</code> property for timing control!
+                </div>
+
+                <a href="challenge1_2.docx" class="download-btn">
+                    📥 Download Assignment File
+                </a>
+            </div>
+
+            <!-- Assignment 2: Z-Index -->
+            <div class="assignment-card">
+                <h2>
+                    Challenge 2: I ♥ NY T-Shirt
+                    <span class="badge">Z-Index</span>
+                </h2>
+                
+                <div class="due-date">⏰ Due: 5:30 PM (End of Class today)</div>
+
+                <div class="section">
+                    <h3>📋 Mission</h3>
+                    <p>Recreate the iconic "I ♥ NY" logo on a t-shirt using CSS positioning and z-index properties!</p>
+                </div>
+
+                <div class="section">
+                    <h3>🎯 Requirements</h3>
+                    <div class="requirements">
+                        <ul>
+                            <li><strong>Relative Positioning:</strong> In the <code>img</code> CSS rule, use relative positioning to place the t-shirt image <strong>10 pixels to the right</strong> of its default location</li>
+                            <li><strong>Absolute Positioning:</strong> In the <code>.first</code>, <code>.heart</code>, and <code>.last</code> CSS rules, use absolute positioning to place "I", "♥", and "NY" in the correct configuration on top of the t-shirt</li>
+                            <li><strong>Z-Index Layering:</strong> Ensure text elements appear above the t-shirt using proper z-index values</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h3>💻 HTML Structure</h3>
+                    <div class="code-block">
+&lt;span class="first words"&gt;I&lt;/span&gt;
+&lt;span class="heart"&gt;&hearts;&lt;/span&gt;
+&lt;span class="last words"&gt;NY&lt;/span&gt;
+&lt;div&gt;
+    &lt;img src="[white tee shirt image]" alt="T-Shirt"&gt;
+&lt;/div&gt;
+                    </div>
+                </div>
+
+                <div class="demo-section">
+                    <h3>🎬 Expected Result Demo</h3>
+                    <div id="tshirt-demo">
+                        <div class="tshirt-container">
+                            <img class="tshirt-img" src="tshit.png" alt="T-Shirt">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="interactive-hint">
+                    <strong>Pro Tip:</strong> Remember that <code>position: absolute</code> elements are positioned relative to their nearest positioned ancestor. Use <code>z-index</code> to control layering!
+                </div>
+
+                <a href="challenge1_2.docx" class="download-btn">
+                    📥 Download Assignment File
+                </a>
+            </div>
+        </div>
+
+        <!-- Tips Section -->
+        <div class="tips-section">
+            <h2>🌟 CSS Pro Tips & Resources</h2>
+            
+            <div class="tip-card">
+                <h3>🎨 Animation Best Practices</h3>
+                <p><strong>Use transform over position properties</strong> - Animations using <code>transform</code> are GPU-accelerated and perform much better than animating <code>top</code>, <code>left</code>, etc.</p>
+            </div>
+
+            <div class="tip-card">
+                <h3>📐 Z-Index Guidelines</h3>
+                <p><strong>Only works on positioned elements</strong> - Remember that <code>z-index</code> only affects elements with a <code>position</code> value other than <code>static</code> (the default).</p>
+            </div>
+
+            <div class="tip-card">
+                <h3>🔧 Debugging Tips</h3>
+                <p><strong>Use browser DevTools</strong> - Right-click and "Inspect Element" to see computed styles, test changes in real-time, and visualize positioning!</p>
+            </div>
+
+            <div class="tip-card">
+                <h3>📚 Useful Resources</h3>
+                <p>
+                    • <a href="index.html" target="_blank">MDN CSS Animations Guide</a><br>
+                    • <a href="index.html" target="_blank">MDN Z-Index Documentation</a><br>
+                    • <a href="index.html" target="_blank">CSS-Tricks Transform Reference</a>
+                </p>
+            </div>
+        </div>
+
+        <footer>
+            <h3>🚀 Ready to Master CSS?</h3>
+            <p>Download the assignment files, experiment with the code, and create amazing visual effects!</p>
+            <a href="submission_Template.html" class="download-btn" style="margin-top: 20px; display: inline-block;">
+                📝 Go to Submission Form
+            </a>
+            <p style="margin-top: 20px; opacity: 0.8;">Made with ❤️ for CSS Learners</p>
+        </footer>
+    </div>
+
+    <script>
+        function restartAnimation() {
+            const answer = document.getElementById('answer');
+            answer.style.animation = 'none';
+            setTimeout(() => {
+                answer.style.animation = 'moveFraction 3s ease-in-out 1s forwards';
+            }, 10);
+        }
+
+        // Add some interactive sparkle effect
+        document.querySelectorAll('.assignment-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transition = 'all 0.3s ease';
+            });
+        });
+
+        // Console message for students
+        console.log('%c🎨 Welcome CSS Challenger! 🚀', 'font-size: 20px; color: #667eea; font-weight: bold;');
+        console.log('%cTip: Open DevTools to inspect the demo animations and learn how they work!', 'font-size: 14px; color: #764ba2;');
+    </script>
+</body>
+</html>
