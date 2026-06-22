@@ -1,0 +1,44 @@
+img {
+    position: relative;
+    left: 10px;
+
+    border: 5px solid black;
+    padding: 10px;
+    margin: 20px;
+    box-shadow: 5px 5px 10px gray;
+}
+
+.words {
+    font-family: Impact;
+    font-size: 60px;
+}
+
+.first {
+    position: absolute;
+    top: 160px;
+    left: 190px;
+    z-index: 2;
+}
+
+.heart {
+    color: red;
+    font-size: 80px;
+
+    position: absolute;
+    top: 190px;
+    left: 215px;
+    z-index: 2;
+}
+
+.last {
+    position: absolute;
+    top: 270px;
+    left: 175px;
+    z-index: 2;
+}
+
+.container {
+    background-color: lightgray;
+    padding: 20px;
+    display: inline-block;
+}
